@@ -1,4 +1,6 @@
+#define _USE_MATH_DEFINES
 #include "solarsystem.h"
+#include <cmath>
 #include <iostream>
 using namespace std;
 
@@ -18,6 +20,7 @@ void SolarSystem::calculateForcesAndEnergy()
     m_kineticEnergy = 0;
     m_potentialEnergy = 0;
     m_angularMomentum.zeros();
+    double m_G = 4*M_PI*M_PI;
 
     for(CelestialBody &body : m_bodies) {
         // Reset forces on all bodies
