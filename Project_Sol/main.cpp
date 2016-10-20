@@ -3,6 +3,7 @@
 #include <cmath>
 #include "solarsystem.h"
 #include "euler.h"
+#include <string>
 
 using namespace std;
 
@@ -16,12 +17,12 @@ int main(int numArguments, char **arguments)
     // This can then be used to modify properties or print properties of the body if desired
     // Use with: solarSystem.createCelestialBody( position, velocity, mass );
 
-    CelestialBody &sun = solarSystem.createCelestialBody( vec3(0,0,0), vec3(0,0,0), 1.0 );
+    CelestialBody &sun = solarSystem.createCelestialBody( vec3(0,0,0), vec3(0,0,0), 1.0, string("Sun"));
 
     // We don't need to store the reference, but just call the function without a left hand side
-    CelestialBody &earth = solarSystem.createCelestialBody( vec3(1, 0, 0), vec3(0, 2*M_PI, 0), 0.000003003 );
-    CelestialBody &venus = solarSystem.createCelestialBody( vec3(0.728, 0, 0), vec3(0, 0.62*2*M_PI, 0), 0.000002447);
-    CelestialBody &mars = solarSystem.createCelestialBody( vec3(1.524, 0, 0), vec3(0, 1.88*2*M_PI, 0), 3.213e-7);
+    CelestialBody &earth = solarSystem.createCelestialBody( vec3(1, 0, 0), vec3(0, 2*M_PI, 0), 0.000003003, string("Earth") );
+    //CelestialBody &venus = solarSystem.createCelestialBody( vec3(0.728, 0, 0), vec3(0, 0.62*2*M_PI, 0), 0.000002447);
+    //CelestialBody &mars = solarSystem.createCelestialBody( vec3(1.524, 0, 0), vec3(0, 1.88*2*M_PI, 0), 3.213e-7);
     // To get a list (a reference, not copy) of all the bodies in the solar system, we use the .bodies() function
     vector<CelestialBody> &bodies = solarSystem.bodies();
 

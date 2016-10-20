@@ -6,11 +6,12 @@
 #include <string>
 #include <fstream>
 
+
 class SolarSystem
 {
 public:
     SolarSystem();
-    CelestialBody &createCelestialBody(vec3 position, vec3 velocity, double mass);
+    CelestialBody &createCelestialBody(vec3 position, vec3 velocity, double mass, std::string name);
     void calculateForcesAndEnergy();
     int numberOfBodies() const;
 

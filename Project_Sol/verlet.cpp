@@ -13,8 +13,8 @@ void Verlet::integrateOneStep(SolarSystem &system)
     system.calculateForcesAndEnergy();
 
     for(CelestialBody &body : system.bodies()) {
-        vel_now = body.velocity;
-        pos_now = body.position;
+        //vel_now = body.velocity;
+        //pos_now = body.position;
 
 
         body.position += body.velocity*m_dt ;

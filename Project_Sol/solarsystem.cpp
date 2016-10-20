@@ -10,8 +10,8 @@ SolarSystem::SolarSystem() :
 {
 }
 
-CelestialBody& SolarSystem::createCelestialBody(vec3 position, vec3 velocity, double mass) {
-    m_bodies.push_back( CelestialBody(position, velocity, mass) );
+CelestialBody& SolarSystem::createCelestialBody(vec3 position, vec3 velocity, double mass, string name) {
+    m_bodies.push_back( CelestialBody(position, velocity, mass, name) );
     return m_bodies.back(); // Return reference to the newest added celstial body
 }
 
@@ -72,10 +72,10 @@ void SolarSystem::writeToFile(string filename)
         }
     }
 
-    m_file << numberOfBodies() << endl;
-    m_file << "Comment line that needs to be here. Balle." << endl;
+    //m_file << numberOfBodies() << endl;
+    //m_file << "Comment line that needs to be here. Balle." << endl;
     for(CelestialBody &body : m_bodies) {
-        m_file << "1 " << body.position.x() << " " << body.position.y() << " " << body.position.z() << "\n";
+        m_file << body.name << " " << body.position.x() << " " << body.position.y() << " " << body.position.z() << "\n";
     }
 }
 
