@@ -2,6 +2,8 @@
 *.o
 *.so
 *.a
+# qt files
+*.pro.user
 # temporary files:
 *.pyc
 *.bak
