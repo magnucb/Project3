@@ -3,6 +3,7 @@
 #include <cmath>
 #include "solarsystem.h"
 #include "euler.h"
+#include "verlet.h"
 #include <string>
 
 using namespace std;
@@ -10,7 +11,13 @@ using namespace std;
 int main(int numArguments, char **arguments)
 {
     int numTimesteps = 1000;
-    if(numArguments >= 2) numTimesteps = atoi(arguments[1]);
+    string integrationmethod = "euler";
+    if (numArguments >= 2) {
+        numTimesteps = atoi(arguments[1]);
+    }
+    if (numArguments >= 3) {
+        string integrationmethod = string(arguments[2]);
+    }
 
     SolarSystem solarSystem;
     // We create new bodies like this. Note that the createCelestialBody function returns a reference to the newly created body
@@ -32,12 +39,20 @@ int main(int numArguments, char **arguments)
     }
 
     double dt = 0.001;
-    Euler integrator(dt);
-    for(int timestep=0; timestep<numTimesteps; timestep++) {
-        integrator.integrateOneStep(solarSystem);
-        solarSystem.writeToFile("positions.xyz");
+    if (integrationmethod == "euler"){
+        Euler integrator(dt);
+        for(int timestep=0; timestep<numTimesteps; timestep++) {
+            integrator.integrateOneStep(solarSystem);
+            solarSystem.writeToFile("positions_euler.xyz");
+        }
     }
-
+    else if (integrationmethod == "verlet"){
+        Verlet integrator(dt);
+        for(int timestep=0; timestep<numTimesteps; timestep++) {
+            integrator.integrateOneStep(solarSystem);
+            solarSystem.writeToFile("positions_verlet.xyz");
+        }
+    }
     cout << "I just created my first solar system that has " << solarSystem.bodies().size() << " objects." << endl;
     return 0;
 }

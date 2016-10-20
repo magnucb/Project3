@@ -37,7 +37,6 @@ void SolarSystem::calculateForcesAndEnergy()
             body1.force += (-m_G*body1.mass*body2.mass*deltaRVector)/pow(dr,3);
             body2.force -= (-m_G*body1.mass*body2.mass*deltaRVector)/pow(dr,3); //hvorfor denne linjen
         }
-
         m_kineticEnergy += 0.5*body1.mass*body1.velocity.lengthSquared();
     }
 }
