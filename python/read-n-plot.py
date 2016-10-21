@@ -12,7 +12,7 @@ def read(address):
     body_names = pl.array(['Sun', 'Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'])
     bodies_positions = {}
 
-    with open(address+"/positions.xyz", 'r') as infile:
+    with open(address+"/positions_verlet_SunEarthMercuryVenusMarsJupiterSaturnUranusNeptunePluto.xyz", 'r') as infile:
         data = infile.read()
     data_splat = data.split('\n')
     file_len = len(data_splat)
@@ -38,7 +38,8 @@ def plot(keys, bodies_with_positions):
     """
     colors = {'Sun':'y', 'Mercury':'k', 'Venus':'0.75', 'Earth':'b', 'Mars':'r', 'Jupiter':'#FF5733', 'Saturn':'#C88617', 'Uranus':'c', 'Neptune':'#6A82FF', 'Pluto':'g'}
     linestyles = {'Sun': '*', 'Mercury':'-', 'Venus':'-', 'Earth':'-', 'Mars':'-', 'Jupiter':'-', 'Saturn':'-', 'Uranus':'-', 'Neptune':'-', 'Pluto':'-'}
-    pl.rcParams['legend.fontsize'] = 10
+    pointstyles = {'Sun': '*', 'Mercury':'o', 'Venus':'o', 'Earth':'o', 'Mars':'o', 'Jupiter':'o', 'Saturn':'o', 'Uranus':'o', 'Neptune':'o', 'Pluto':'o'}
+    pl.rcParams['legend.fontsize'] = 11
     fig = pl.figure()
     
     ax = fig.gca(projection='3d')
@@ -46,18 +47,20 @@ def plot(keys, bodies_with_positions):
     for i in bodies_positions:
         xyz = bodies_positions[i]
         ax.plot(xyz[:,0], xyz[:,1], xyz[:,2], linestyles[i], label=i, color=colors[i])
+        ax.plot([xyz[0,0]], [xyz[0,1]], [xyz[0,2]], pointstyles[i], color=colors[i])
 
     ax.set_aspect('equal')
     ax.set_xlabel('X-axis [AU]')
     ax.set_ylabel('Y-axis [AU]')
     ax.set_zlabel('Z-axis [AU]')
-    ax.legend()
+    ax.set_title(r'Solar system, Euler, $10^5$ steps')
+    ax.legend(loc='lower left')
     pl.show()
     body_string = ""
     for key in bodies_positions:
         body_string += key
 
-    pl.savefig('solar_system_with_%s.png' % body_string, dpi=300)
+    # pl.savefig('solar_system_with_%s.png' % body_string, dpi=300) # doesn't work
 
 
 if __name__ == '__main__':
