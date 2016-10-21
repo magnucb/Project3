@@ -12,8 +12,11 @@ def read(address):
     body_names = pl.array(['Sun', 'Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'])
     bodies_positions = {}
 
+    ###### REMEMBER TO EDIT THIS WHEN PLOTTING DIFFERENT STUFF
     with open(address+"/positions_verlet_SunEarthMercuryVenusMarsJupiterSaturnUranusNeptunePluto.xyz", 'r') as infile:
+        ###### REMEMBER TO EDIT THIS WHEN PLOTTING DIFFERENT STUFF
         data = infile.read()
+    
     data_splat = data.split('\n')
     file_len = len(data_splat)
 
@@ -53,7 +56,7 @@ def plot(keys, bodies_with_positions):
     ax.set_xlabel('X-axis [AU]')
     ax.set_ylabel('Y-axis [AU]')
     ax.set_zlabel('Z-axis [AU]')
-    ax.set_title(r'Solar system, Euler, $10^5$ steps')
+    ax.set_title(r'Solar system, Euler, $10^5$ steps') ###### REMEMBER TO EDIT THIS WHEN PLOTTING DIFFERENT STUFF
     ax.legend(loc='lower left')
     pl.show()
     body_string = ""
