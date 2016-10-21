@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include "verlet.h"
 #include "solarsystem.h"
 #include <math.h>
