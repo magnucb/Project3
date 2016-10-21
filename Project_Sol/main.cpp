@@ -18,8 +18,6 @@ int main(int numArguments, char **arguments)
     if (numArguments >= 3) {
         integrationmethod = string(arguments[2]);
     }
-
-    cout << arguments[1] <<" "<< arguments[2] << endl;
     cout << "Using " << integrationmethod << " method w/ " << numTimesteps << " time steps." << endl;
 
     SolarSystem solarSystem;
@@ -31,7 +29,7 @@ int main(int numArguments, char **arguments)
 
     // We don't need to store the reference, but just call the function without a left hand side
     CelestialBody &earth = solarSystem.createCelestialBody( vec3(1, 0, 0), vec3(0, 2*M_PI, 0), 0.000003003, string("Earth") );
-
+    /*
     CelestialBody &mercury = solarSystem.createCelestialBody( vec3(0.39, 0, 0),  vec3(0, 2*M_PI*0.39/0.240846, 0), 0.000002447, string("Mercury"));
     CelestialBody &venus = solarSystem.createCelestialBody(   vec3(0.728, 0, 0), vec3(0, 2*M_PI*0.728/0.61521, 0), 0.000002447, string("Venus"));
     CelestialBody &mars = solarSystem.createCelestialBody(    vec3(1.524, 0, 0), vec3(0, 2*M_PI*1.524/1.88089, 0), 3.213e-7, string("Mars"));
@@ -40,12 +38,13 @@ int main(int numArguments, char **arguments)
     CelestialBody &uranus = solarSystem.createCelestialBody(  vec3(19.2, 0, 0),  vec3(0, 2*M_PI*19.20/84.04, 0),   0.00004365, string("Uranus"));
     CelestialBody &neptune = solarSystem.createCelestialBody( vec3(30.05, 0, 0), vec3(0, 2*M_PI*30.05/164.8, 0),   0.0009543, string("Neptune"));
     CelestialBody &pluto = solarSystem.createCelestialBody(   vec3(39.48, 0, 0), vec3(0, 2*M_PI*39.48/248.1, 0),   0.0009543, string("Pluto"));
+    */
     // To get a list (a reference, not copy) of all the bodies in the solar system, we use the .bodies() function
     vector<CelestialBody> &bodies = solarSystem.bodies();
 
     for(int i = 0; i<bodies.size(); i++) {
         CelestialBody &body = bodies[i]; // Reference to this body
-        cout << "The position of this object is " << body.position << " with velocity " << body.velocity << endl;
+        cout << "The position of "<< body.name <<" begins at " << body.position << "AU with velocity " << body.velocity << "AU/yr "<< endl;
     }
     string bodies_string;
     for(int i = 0; i<bodies.size(); i++) {
@@ -53,8 +52,6 @@ int main(int numArguments, char **arguments)
         bodies_string.append(body.name);
     }
     double dt = 0.001;
-
-    cout << "Using " << integrationmethod << " method w/ " << numTimesteps << " time steps." << endl;
 
     if (string(integrationmethod) == string("euler")){
         Euler integrator(dt);
