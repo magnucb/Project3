@@ -3,6 +3,7 @@
 #include <iostream>
 using namespace std;
 
+
 vec3::vec3()
 {
     zeros();

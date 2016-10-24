@@ -15,6 +15,7 @@ public:
     void calculateForcesAndEnergy();
     int numberOfBodies() const;
 
+
     double totalEnergy() const;
     double potentialEnergy() const;
     double kineticEnergy() const;

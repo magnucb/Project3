@@ -14,6 +14,7 @@ public:
     double mass;
     string name;
 
+
     CelestialBody(vec3 position, vec3 velocity, double mass, string name);
     CelestialBody(double x, double y, double z, double vx, double vy, double vz, double mass, string name);
     void resetForce();

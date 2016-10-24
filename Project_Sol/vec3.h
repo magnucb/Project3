@@ -31,6 +31,7 @@ public:
     void print(std::string name);
     friend std::ostream& operator<<(std::ostream& os, const vec3& myVector); // Allows cout << myVector << endl;
 
+
     // Operators
     double &operator()(int index) { return components[index]; } // Allows access like myVector(0)
     double &operator[](int index) { return components[index]; } // Allows access like myVector[0]

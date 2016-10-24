@@ -1,5 +1,6 @@
 #include "celestialbody.h"
 
+
 CelestialBody::CelestialBody(vec3 pos, vec3 vel, double mass_, string name_) {
     position = pos;
     velocity = vel;

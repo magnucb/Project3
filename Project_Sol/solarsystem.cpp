@@ -82,7 +82,6 @@ void SolarSystem::writeToFile(string filename)
 
 vec3 SolarSystem::angularMomentum(vec3 position, vec3 velocity) const
 {
-
     return position.cross(velocity);//m_angularMomentum;
 }
 
