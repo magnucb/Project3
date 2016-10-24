@@ -75,7 +75,7 @@ int main(int numArguments, char **arguments)
         t_start = clock();
         for(int timestep=0; timestep<numTimesteps; timestep++) {
             integrator.integrateOneStep(solarSystem);
-            //solarSystem.writeToFile("positions_euler_"+string(bodies_string)+".xyz");
+            solarSystem.writeToFile("positions_euler_"+string(bodies_string)+".xyz");
         }
         t_stop = clock();
     }
@@ -84,7 +84,7 @@ int main(int numArguments, char **arguments)
         t_start = clock();
         for(int timestep=0; timestep<numTimesteps; timestep++) {
             integrator.integrateOneStep(solarSystem);
-            //solarSystem.writeToFile("positions_verlet_"+string(bodies_string)+".xyz");
+            solarSystem.writeToFile("positions_verlet_"+string(bodies_string)+".xyz");
         }
         t_stop = clock();
     }
