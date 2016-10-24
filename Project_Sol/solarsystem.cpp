@@ -21,6 +21,7 @@ void SolarSystem::calculateForcesAndEnergy()
     m_potentialEnergy = 0;
     m_angularMomentum.zeros();
     double m_G = 4*M_PI*M_PI;
+    double angconst = 3.0/pow(63197.8,2); // 3 / c**2, [c] = AU/yr
 
     for(CelestialBody &body : m_bodies) {
         // Reset forces on all bodies
@@ -33,9 +34,12 @@ void SolarSystem::calculateForcesAndEnergy()
             CelestialBody &body2 = m_bodies[j];
             vec3 deltaRVector = body1.position - body2.position;
             double dr = deltaRVector.length();
+            vec3 deltaVVector = body1.velocity - body2.velocity;
+            double l2 = angularMomentum(deltaRVector, deltaVVector).lengthSquared();
             // Calculate the force and potential energy here
-            body1.force += (-m_G*body1.mass*body2.mass*deltaRVector)/pow(dr,3);
-            body2.force -= (-m_G*body1.mass*body2.mass*deltaRVector)/pow(dr,3); //hvorfor denne linjen
+            vec3 Force = (-m_G*body1.mass*body2.mass*deltaRVector)*(1 + angconst*l2/(dr*dr))/(dr*dr*dr);
+            body1.force += Force;
+            body2.force -= Force;
         }
         m_kineticEnergy += 0.5*body1.mass*body1.velocity.lengthSquared();
     }
@@ -76,9 +80,10 @@ void SolarSystem::writeToFile(string filename)
     }
 }
 
-vec3 SolarSystem::angularMomentum() const
+vec3 SolarSystem::angularMomentum(vec3 position, vec3 velocity) const
 {
-    return m_angularMomentum;
+
+    return position.cross(velocity);//m_angularMomentum;
 }
 
 std::vector<CelestialBody> &SolarSystem::bodies()
