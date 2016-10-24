@@ -13,7 +13,7 @@ def read(address):
     bodies_positions = {}
 
     ###### REMEMBER TO EDIT THIS WHEN PLOTTING DIFFERENT STUFF
-    with open(address+"/positions_verlet_SunEarth.xyz", 'r') as infile:
+    with open(address+"/positions_verlet_SunEarthJupiterMercuryVenusMarsSaturnUranusNeptunePluto.xyz", 'r') as infile:
         ###### REMEMBER TO EDIT THIS WHEN PLOTTING DIFFERENT STUFF
         data = infile.read()
     
@@ -53,8 +53,8 @@ def plot(keys, bodies_with_positions):
         #ax.plot([xyz[0,0]], [xyz[0,1]], [xyz[0,2]], pointstyles[i], color=colors[i])
         ax.plot([xyz[-1,0]], [xyz[-1,1]], [xyz[-1,2]], pointstyles[i], color=colors[i])
     ax.set_aspect('equal')
-    system = "inner"
-    # system = "jupiter"
+    # system = "inner"
+    system = "jupiter"
     # system = 'merc'
     # system = 0
     if system == "inner":
@@ -77,7 +77,7 @@ def plot(keys, bodies_with_positions):
     ax.set_xlabel('X-axis [AU]')
     ax.set_ylabel('Y-axis [AU]')
     ax.set_zlabel('Z-axis [AU]')
-    ax.set_title(r'Sun+Earth, Verlet, $10^2$ yrs') ###### REMEMBER TO EDIT THIS WHEN PLOTTING DIFFERENT STUFF
+    ax.set_title(r'Solar system, inner system view, Verlet, $1\cdot10^2$ yrs') ###### REMEMBER TO EDIT THIS WHEN PLOTTING DIFFERENT STUFF
     ax.legend(loc='lower left')
     pl.show()
 
