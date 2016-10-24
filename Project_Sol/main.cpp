@@ -5,6 +5,7 @@
 #include "euler.h"
 #include "verlet.h"
 #include <string>
+#include <time.h>
 
 using namespace std;
 
@@ -19,6 +20,9 @@ int main(int numArguments, char **arguments)
         integrationmethod = string(arguments[2]);
     }
     cout << "Using " << integrationmethod << " method w/ " << numTimesteps << " time steps." << endl;
+
+    clock_t t_start, t_stop;
+    double time;
 
     SolarSystem solarSystem;
     // We create new bodies like this. Note that the createCelestialBody function returns a reference to the newly created body
@@ -56,7 +60,7 @@ int main(int numArguments, char **arguments)
 
     for(int i = 0; i<bodies.size(); i++) {
         CelestialBody &body = bodies[i]; // Reference to this body
-        cout << "The position of "<< body.name <<" begins at " << body.position << "AU with velocity " << body.velocity << "AU/yr "<< endl;
+        //cout << "The position of "<< body.name <<" begins at " << body.position << "AU with velocity " << body.velocity << "AU/yr "<< endl;
     }
     string bodies_string;
     for(int i = 0; i<bodies.size(); i++) {
@@ -65,21 +69,35 @@ int main(int numArguments, char **arguments)
     }
     double dt = 0.001;
 
+
     if (string(integrationmethod) == string("euler")){
         Euler integrator(dt);
+        t_start = clock();
         for(int timestep=0; timestep<numTimesteps; timestep++) {
             integrator.integrateOneStep(solarSystem);
-            solarSystem.writeToFile("positions_euler_"+string(bodies_string)+".xyz");
+            //solarSystem.writeToFile("positions_euler_"+string(bodies_string)+".xyz");
         }
+        t_stop = clock();
     }
     else if (string(integrationmethod) == string("verlet")){
         Verlet integrator(dt);
+        t_start = clock();
         for(int timestep=0; timestep<numTimesteps; timestep++) {
             integrator.integrateOneStep(solarSystem);
-            solarSystem.writeToFile("positions_verlet_"+string(bodies_string)+".xyz");
+            //solarSystem.writeToFile("positions_verlet_"+string(bodies_string)+".xyz");
         }
+        t_stop = clock();
+    }
+    else {
+        cout << "You gave the wrong argument, no method specified." << endl
+             << "Exiting!" << endl;
+        exit(1);
     }
     cout << "I just created my first solar system that has " << solarSystem.bodies().size() << " objects." << endl;
+
+    time = abs(t_start - t_stop)/( (double) CLOCKS_PER_SEC);
+    cout << "time of integration method: t=" << time << " s" << endl;
+
     return 0;
 }
 
