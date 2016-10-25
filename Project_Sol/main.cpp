@@ -30,12 +30,12 @@ int main(int numArguments, char **arguments)
     // Use with: solarSystem.createCelestialBody( position, velocity, mass );
 
     //static sun
-    //CelestialBody &sun = solarSystem.createCelestialBody( vec3(0,0,0), vec3(0,0,0), 1.0, string("Sun"));
+    CelestialBody &sun = solarSystem.createCelestialBody( vec3(0,0,0), vec3(0,0,0), 1.0, string("Sun"));
     //sun with cancelling momentum
-    CelestialBody &sun = solarSystem.createCelestialBody( vec3(-0.02196846, 0.01239014, 0.00024453), vec3(-1.08324333e-03, 1.50783277e-03, 4.32260022e-05), 1.0, string("Sun"));
+    //CelestialBody &sun = solarSystem.createCelestialBody( vec3(-0.02196846, 0.01239014, 0.00024453), vec3(-1.08324333e-03, 1.50783277e-03, 4.32260022e-05), 1.0, string("Sun"));
 
     // Earth
-    //CelestialBody &earth = solarSystem.createCelestialBody( vec3(8.841554736579088E-01, 4.675846666013374E-01, -1.788208627053143E-04),     vec3(-3.03047582e+00, 5.53804088e+00, -2.61593386e-04),   0.000003003, string("Earth") );
+    CelestialBody &earth = solarSystem.createCelestialBody( vec3(8.841554736579088E-01, 4.675846666013374E-01, -1.788208627053143E-04),     vec3(-3.03047582e+00, 5.53804088e+00, -2.61593386e-04),   0.000003003, string("Earth") );
 
     // Jupiter
     //CelestialBody &jupiter = solarSystem.createCelestialBody( vec3(-5.425134275608231E+00, -4.965390581079263E-01, 1.233903897528774E-01), vec3(0.21935934, -2.61433515, 0.00596296),                0.0009543, string("Jupiter"));
@@ -43,7 +43,7 @@ int main(int numArguments, char **arguments)
     // normal mercury
     //CelestialBody &mercury = solarSystem.createCelestialBody( vec3(-3.915735125896518E-01, -8.031632966591709E-02, 2.924535350247253E-02),  vec3(-4.12705352e-03,  -9.60776278e+00, -7.84947463e-01), 1.652e-7, string("Mercury"));
     // perihelion mercury
-    CelestialBody &mercury = solarSystem.createCelestialBody( vec3(0.3075, 0, 0),  vec3(0,  12.44, 0), 1.652e-7, string("Mercury"));
+    //CelestialBody &mercury = solarSystem.createCelestialBody( vec3(0.3075, 0, 0),  vec3(0,  12.44, 0), 1.652e-7, string("Mercury"));
 
     /*
     CelestialBody &venus = solarSystem.createCelestialBody(   vec3(3.136264982750417E-01, -6.546683031177923E-01, -2.707665055849010E-02),  vec3(6.63254485, 3.12614069, -0.33993686),                0.000002447, string("Venus"));
@@ -95,7 +95,7 @@ int main(int numArguments, char **arguments)
          * of mercury during every revolution. This position is found
          * when radial length is smaller then the timestep before and after the
          * "current" one
-         */
+         *
         double prev_r, r, next_r; //three different radial lengths
         Verlet integrator(1e-7);
 
@@ -128,6 +128,22 @@ int main(int numArguments, char **arguments)
             r = next_r;
         }
         perihelion_file.close();
+        */
+    }
+    else if (string(integrationmethod) == string("testenergy")){
+        Verlet integrator(dt);
+        //integrate one step and print E_p, E_k, l
+        integrator.integrateOneStep(solarSystem);
+        cout << "Kinetic energy of earth-sun-system at beginning: " << solarSystem.kineticEnergy() << endl
+             << "Potential energy of earth-sun-system at beginning: " << solarSystem.potentialEnergy() << endl
+             << "Angular momentum of earth at beginning: " << solarSystem.angularMomentum(earth.position, earth.velocity) << endl;
+        for(int timestep=1; timestep<numTimesteps; timestep++) {
+            integrator.integrateOneStep(solarSystem);
+            //solarSystem.writeToFile("positions_verlet_"+string(bodies_string)+".xyz");
+        }
+        cout << "Kinetic energy of earth-sun-system at one rotation: " << solarSystem.kineticEnergy() << endl
+             << "Potential energy of earth-sun-system at one rotation: " << solarSystem.potentialEnergy() << endl
+             << "Angular momentum of earth at one rotation: " << solarSystem.angularMomentum(earth.position, earth.velocity) << endl;
     }
     else {
         cout << "You gave the wrong argument, no method specified." << endl
